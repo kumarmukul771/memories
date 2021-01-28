@@ -1,6 +1,6 @@
-import jwt from "jsonwebtoken";
-
-const secret = 'test';
+// import jwt from "jsonwebtoken";
+const jwt = require("jsonwebtoken");
+const secret = "test";
 
 const auth = async (req, res, next) => {
   try {
@@ -9,15 +9,15 @@ const auth = async (req, res, next) => {
 
     let decodedData;
 
-    if (token && isCustomAuth) {      
+    if (token && isCustomAuth) {
       decodedData = jwt.verify(token, secret);
 
-      req.userId = decodedData?.id;
+      req.userId = decodedData.id;
     } else {
       decodedData = jwt.decode(token);
 
-      req.userId = decodedData?.sub;
-    }    
+      req.userId = decodedData.sub;
+    }
 
     next();
   } catch (error) {
@@ -25,4 +25,4 @@ const auth = async (req, res, next) => {
   }
 };
 
-export default auth;
+module.exports = auth;
